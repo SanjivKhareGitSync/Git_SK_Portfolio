@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Technical Round | .NET Backend Interview Prep</title>
+<style>
+:root{--bg:#07111f;--text:#eaf2ff;--muted:#9fb0c7;--line:#223957;--accent:#58d6c3;--accent2:#7c8cff;--gold:#ffd166}
+*{box-sizing:border-box}body{margin:0;background:radial-gradient(circle at 80% -10%,#203a66 0,#07111f 42%);color:var(--text);font:15px/1.65 system-ui,-apple-system,Segoe UI,sans-serif}
+.app{display:grid;grid-template-columns:290px 1fr;min-height:100vh}
+.sidebar{position:sticky;top:0;height:100vh;padding:28px 20px;border-right:1px solid var(--line);background:#091728ee;backdrop-filter:blur(18px);overflow:auto}
+.brand{display:flex;gap:12px;align-items:center;margin-bottom:28px}
+.logo{width:42px;height:42px;display:grid;place-items:center;border-radius:13px;background:linear-gradient(135deg,var(--accent),var(--accent2));color:#06111d;font-weight:900;font-size:20px}
+.brand h1{font-size:19px;line-height:1.1;margin:0}.brand small{color:var(--muted)}
+.progress-label{display:flex;justify-content:space-between;color:var(--muted);font-size:12px;margin-bottom:8px}
+.progress{height:7px;background:#172b45;border-radius:99px;overflow:hidden}
+.progress span{display:block;height:100%;width:0;background:linear-gradient(90deg,var(--accent),var(--accent2));transition:.3s}
+.nav{margin-top:28px}.nav button{width:100%;text-align:left;background:transparent;border:0;color:var(--muted);padding:10px 12px;border-radius:10px;cursor:pointer;font:inherit}
+.nav button:hover,.nav button.active{background:#142942;color:var(--text)}
+.main{min-width:0}
+.hero{padding:62px clamp(22px,6vw,80px) 35px;max-width:1250px}
+.eyebrow{color:var(--accent);font-weight:700;letter-spacing:.12em;text-transform:uppercase;font-size:12px}
+.hero h2{font-size:clamp(34px,5vw,65px);line-height:1.03;max-width:800px;margin:13px 0 18px;letter-spacing:-.045em}
+.hero p{max-width:680px;color:var(--muted);font-size:17px}
+.hero-tags{display:flex;gap:8px;flex-wrap:wrap;margin-top:22px}
+.tag{padding:7px 11px;border:1px solid var(--line);border-radius:99px;color:#c8d6eb;background:#0b1a2d}
+.toolbar{position:sticky;top:0;z-index:5;display:flex;gap:10px;flex-wrap:wrap;padding:14px clamp(22px,6vw,80px);background:#07111fe6;border-block:1px solid var(--line);backdrop-filter:blur(15px)}
+input,select{background:#0d1b2e;color:var(--text);border:1px solid var(--line);border-radius:10px;padding:11px 13px;outline:none}
+input{flex:1;min-width:220px}
+.btn{background:#142942;color:var(--text);border:1px solid var(--line);border-radius:10px;padding:10px 13px;cursor:pointer;font-weight:650}
+.btn:hover{border-color:var(--accent);color:var(--accent)}
+.content{max-width:1250px;padding:30px clamp(22px,6vw,80px) 80px}
+.section{margin:42px 0}
+.section-head{display:flex;align-items:end;justify-content:space-between;gap:15px;margin-bottom:15px}
+.section h3{font-size:25px;margin:0}
+.section-count{color:var(--muted);font-size:13px}
+.cards{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,360px),1fr));gap:14px}
+.card{background:linear-gradient(145deg,#10223a,#0b192b);border:1px solid var(--line);border-radius:17px;overflow:hidden;transition:.2s}
+.card:hover{transform:translateY(-2px);border-color:#3b608b}
+.card.done{border-color:#2f8f86}
+.qhead{display:flex;gap:12px;padding:20px;cursor:pointer}
+.num{flex:none;width:30px;height:30px;display:grid;place-items:center;border-radius:9px;background:#18304d;color:var(--accent);font-weight:800;font-size:12px}
+.question{font-weight:750;font-size:16px;line-height:1.4;flex:1}
+.chevron{color:var(--muted);transition:.2s}
+.card.open .chevron{transform:rotate(180deg);color:var(--accent)}
+.answer{display:none;padding:0 20px 20px 62px;color:#cbd7e8}
+.card.open .answer{display:block}
+.answer p{margin:0 0 13px}
+.answer strong{color:var(--gold);font-size:12px;text-transform:uppercase;letter-spacing:.08em}
+.example{margin-top:7px;border-left:3px solid var(--accent);background:#081625;padding:11px 13px;border-radius:0 9px 9px 0;color:#d9fff8;font-family:ui-monospace,monospace;font-size:13px;overflow:auto}
+.empty,.state{text-align:center;color:var(--muted);padding:60px 10px}
+.tip{margin-top:35px;padding:18px 20px;border:1px solid #39517b;background:#10213a;border-radius:15px;color:#c7d7ed}
+.tip span{color:var(--gold)}
+mark{background:#fff0a8;color:#17202c;border-radius:3px;padding:0 2px}
+@media(max-width:800px){.app{display:block}.sidebar{position:relative;height:auto;border-right:0;border-bottom:1px solid var(--line);padding:18px}.nav{display:flex;gap:7px;overflow:auto;margin-top:18px}.nav button{white-space:nowrap;width:auto}.hero{padding-top:35px}.toolbar{position:relative}.answer{padding-left:20px}}
+</style>
+</head>
+<body>
+<div class="app">
+<aside class="sidebar">
+  <div class="brand"><div class="logo">.N</div><div><h1>Technical Round</h1><small>.NET Backend • 3 Years</small></div></div>
+  <div class="progress-label"><span>Preparation progress</span><span id="progressText">0 / 0</span></div>
+  <div class="progress"><span id="progressBar"></span></div>
+  <nav class="nav" id="nav"></nav>
+</aside>
+<main class="main">
+  <header class="hero">
+    <div class="eyebrow">Interview command center</div>
+    <h2>Build confidence for your next technical round.</h2>
+    <p>Questions and answers loaded live from <code>questions.xml</code>, covering C#, ASP.NET Core, APIs, security, EF Core, SQL Server, architecture, testing, and production engineering.</p>
+    <div class="hero-tags"><span class="tag" id="tagCount">Loading…</span><span class="tag" id="tagSections">—</span><span class="tag">Answer + example</span></div>
+  </header>
+  <div class="toolbar">
+    <input id="search" type="search" placeholder="Search questions, topics, or keywords…">
+    <select id="category"><option value="all">All categories</option></select>
+    <button class="btn" id="expand" type="button">Expand all</button>
+    <button class="btn" id="reset" type="button">Reset progress</button>
+  </div>
+  <section class="content" id="content"><div class="state" id="loading">Loading questions.xml…</div></section>
+</main>
+</div>
+<script>
+const contentEl=document.getElementById('content'), navEl=document.getElementById('nav'), categoryEl=document.getElementById('category'), searchEl=document.getElementById('search'), loadingEl=document.getElementById('loading');
+let questions=[];
+
+function escapeHtml(s){return String(s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]))}
+function highlight(s){const term=searchEl.value.trim();if(!term)return escapeHtml(s);const safe=term.replace(/[.*+?^${}()|[\]\\]/g,'\\$&');return escapeHtml(s).replace(new RegExp('('+safe+')','ig'),'<mark>$1</mark>')}
+function doneList(){return JSON.parse(localStorage.getItem('technicalRoundDone')||'[]')}
+function markDone(id){const list=doneList();if(!list.includes(id)){list.push(id);localStorage.setItem('technicalRoundDone',JSON.stringify(list))}updateProgress()}
+function updateProgress(){const list=doneList();document.getElementById('progressText').textContent=list.length+' / '+questions.length;document.getElementById('progressBar').style.width=(questions.length?list.length/questions.length*100:0)+'%';document.querySelectorAll('.card').forEach(c=>{if(list.includes(Number(c.dataset.id)))c.classList.add('done')})}
+
+function render(){
+  const term=searchEl.value.toLowerCase(), cat=categoryEl.value;
+  const filtered=questions.filter(x=>(cat==='all'||x.section===cat)&&(!term||(x.section+' '+x.q+' '+x.a+' '+x.e).toLowerCase().includes(term)));
+  contentEl.innerHTML='';
+  if(!filtered.length){contentEl.innerHTML='<div class="empty">No questions match your search.</div>';return}
+  const groups={};
+  filtered.forEach(x=>(groups[x.section]=groups[x.section]||[]).push(x));
+  Object.entries(groups).forEach(([name,items])=>{
+    const section=document.createElement('div');
+    section.className='section';
+    section.innerHTML='<div class="section-head"><h3>'+escapeHtml(name)+'</h3><span class="section-count">'+items.length+' questions</span></div><div class="cards"></div>';
+    const cards=section.querySelector('.cards');
+    items.forEach(x=>{
+      const card=document.createElement('article');
+      card.className='card';
+      card.dataset.id=x.id;
+      card.innerHTML='<div class="qhead"><span class="num">'+x.id+'</span><span class="question">'+highlight(x.q)+'</span><span class="chevron">⌄</span></div><div class="answer"><p>'+highlight(x.a)+'</p><strong>Example</strong><div class="example">'+highlight(x.e)+'</div></div>';
+      card.querySelector('.qhead').addEventListener('click',()=>{card.classList.toggle('open');if(card.classList.contains('open'))markDone(x.id)});
+      cards.appendChild(card);
+    });
+    contentEl.appendChild(section);
+  });
+  const tip=document.createElement('div');
+  tip.className='tip';
+  tip.innerHTML='<span>Interview tip:</span> Answer in this order: definition → why it matters → a project example → trade-off or limitation.';
+  contentEl.appendChild(tip);
+  updateProgress();
+}
+
+function buildNav(){
+  const sections=[...new Set(questions.map(x=>x.section))];
+  sections.forEach(name=>{
+    const opt=document.createElement('option');opt.value=name;opt.textContent=name;categoryEl.appendChild(opt);
+    const btn=document.createElement('button');btn.type='button';btn.textContent=name;
+    btn.addEventListener('click',()=>{categoryEl.value=name;render()});
+    navEl.appendChild(btn);
+  });
+  document.getElementById('tagCount').textContent=questions.length+' questions';
+  document.getElementById('tagSections').textContent=sections.length+' domains';
+}
+
+function parseXml(xmlText){
+  const parser=new DOMParser();
+  const doc=parser.parseFromString(xmlText,'application/xml');
+  const errorNode=doc.querySelector('parsererror');
+  if(errorNode) throw new Error('XML parse error: '+errorNode.textContent);
+  return [...doc.getElementsByTagName('question')].map(node=>({
+    id:Number(node.getAttribute('id')),
+    section:node.getElementsByTagName('section')[0]?.textContent.trim()||'GENERAL',
+    q:node.getElementsByTagName('text')[0]?.textContent.trim()||'',
+    a:node.getElementsByTagName('answer')[0]?.textContent.trim()||'',
+    e:node.getElementsByTagName('example')[0]?.textContent.trim()||''
+  }));
+}
+
+fetch('questions.xml')
+  .then(res=>{
+    if(!res.ok) throw new Error('HTTP '+res.status+' while fetching questions.xml');
+    return res.text();
+  })
+  .then(xmlText=>{
+    questions=parseXml(xmlText);
+    if(!questions.length) throw new Error('questions.xml loaded but contained no <question> entries.');
+    loadingEl.remove();
+    buildNav();
+    render();
+  })
+  .catch(err=>{
+    loadingEl.innerHTML='<strong style="color:#ff7b8b">Could not load questions.xml.</strong><br>'+escapeHtml(err.message)+'<br><br>Make sure questions.xml is in the same folder as this HTML file and the page is served over http/https (GitHub Pages works; opening the file directly with file:// will not).';
+  });
+
+searchEl.addEventListener('input',render);
+categoryEl.addEventListener('change',render);
+document.getElementById('expand').addEventListener('click',()=>{
+  const cards=document.querySelectorAll('.card');
+  const shouldOpen=[...cards].some(c=>!c.classList.contains('open'));
+  cards.forEach(c=>{c.classList.toggle('open',shouldOpen);if(shouldOpen)markDone(Number(c.dataset.id))});
+});
+document.getElementById('reset').addEventListener('click',()=>{localStorage.removeItem('technicalRoundDone');updateProgress()});
+</script>
+</body>
+</html>

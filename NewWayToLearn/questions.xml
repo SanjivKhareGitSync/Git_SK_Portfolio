@@ -1,0 +1,603 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<questions>
+  <question id="1">
+    <section>C# AND .NET</section>
+    <text>What is the difference between value types and reference types?</text>
+    <answer>Value types store their data directly and are copied on assignment; reference types store a reference to an object, so variables can point to the same object.</answer>
+    <example>int b = a copies a value; two variables referring to the same List&lt;string&gt; can observe the same changes.</example>
+  </question>
+  <question id="2">
+    <section>C# AND .NET</section>
+    <text>What is boxing and unboxing?</text>
+    <answer>Boxing converts a value type to object or an interface reference; unboxing extracts the value type back and requires the correct type.</answer>
+    <example>object value = 5; int number = (int)value;</example>
+  </question>
+  <question id="3">
+    <section>C# AND .NET</section>
+    <text>What is the difference between var, dynamic, and object?</text>
+    <answer>var is compile-time type inference, object is the common base type and normally needs casting for specific members, and dynamic defers member binding to runtime.</answer>
+    <example>var x = 5 is an int; dynamic d = GetObject(); d.Run() is checked at runtime.</example>
+  </question>
+  <question id="4">
+    <section>C# AND .NET</section>
+    <text>What are async and await, and why are they useful?</text>
+    <answer>async marks a method that can await asynchronous work; await pauses that method without blocking the calling thread while the awaited operation completes.</answer>
+    <example>var products = await db.Products.ToListAsync();</example>
+  </question>
+  <question id="5">
+    <section>C# AND .NET</section>
+    <text>What is the difference between Task and Thread?</text>
+    <answer>A Task represents an asynchronous operation and its eventual result; a Thread is an operating-system execution thread. Async I/O usually uses Tasks without dedicating a thread while waiting.</answer>
+    <example>HttpClient.GetStringAsync returns Task&lt;string&gt;.</example>
+  </question>
+  <question id="6">
+    <section>C# AND .NET</section>
+    <text>What is the difference between IEnumerable, ICollection, IList, and IQueryable?</text>
+    <answer>IEnumerable supports enumeration, ICollection adds size and add/remove operations, IList adds indexed access, and IQueryable represents a provider-translatable query.</answer>
+    <example>db.Products.Where(p =&gt; p.Active) is IQueryable until ToListAsync executes it.</example>
+  </question>
+  <question id="7">
+    <section>C# AND .NET</section>
+    <text>What are delegates, events, and lambda expressions?</text>
+    <answer>A delegate is a type-safe reference to a method, an event is a controlled publish-subscribe mechanism based on delegates, and a lambda is concise anonymous-function syntax.</answer>
+    <example>button.Click += (sender, e) =&gt; Save();</example>
+  </question>
+  <question id="8">
+    <section>C# AND .NET</section>
+    <text>What is the difference between an abstract class and an interface?</text>
+    <answer>An abstract class can provide shared state and implementation; an interface defines a contract and a class can implement multiple interfaces.</answer>
+    <example>BasePayment may contain common logic, while IPaymentProcessor exposes ProcessAsync.</example>
+  </question>
+  <question id="9">
+    <section>C# AND .NET</section>
+    <text>What is method overloading versus method overriding?</text>
+    <answer>Overloading uses the same method name with different parameter lists; overriding replaces a virtual or abstract base-class method in a derived class.</answer>
+    <example>Add(int,int) and Add(decimal,decimal) are overloads; derived Save overrides base virtual Save.</example>
+  </question>
+  <question id="10">
+    <section>C# AND .NET</section>
+    <text>What are access modifiers in C#?</text>
+    <answer>Access modifiers control visibility: public, private, protected, internal, protected internal, and private protected.</answer>
+    <example>a private password hash field is accessible only inside its class.</example>
+  </question>
+  <question id="11">
+    <section>C# AND .NET</section>
+    <text>What is the difference between const, readonly, and static readonly?</text>
+    <answer>const is compile-time fixed, readonly is assigned at declaration or constructor per instance, and static readonly is assigned once for the type at runtime.</answer>
+    <example>const int Days = 7; readonly Guid id; static readonly DateTime StartedAt = DateTime.UtcNow;</example>
+  </question>
+  <question id="12">
+    <section>C# AND .NET</section>
+    <text>What is exception handling, and when should you create custom exceptions?</text>
+    <answer>Exception handling uses try, catch, finally, and throw to manage failures. Create a custom exception when a distinct domain failure needs meaningful handling.</answer>
+    <example>throw new OrderAlreadyShippedException() when cancellation is prohibited.</example>
+  </question>
+  <question id="13">
+    <section>C# AND .NET</section>
+    <text>What is IDisposable, and why use using?</text>
+    <answer>IDisposable defines deterministic cleanup of resources; using ensures Dispose is called even when an exception occurs.</answer>
+    <example>using var stream = File.OpenRead(path);</example>
+  </question>
+  <question id="14">
+    <section>C# AND .NET</section>
+    <text>What is the difference between Dispose and Finalize?</text>
+    <answer>Dispose is explicit, deterministic cleanup; Finalize is a GC-triggered fallback for unmanaged-resource cleanup and runs at an unpredictable time.</answer>
+    <example>dispose a database connection promptly rather than waiting for finalization.</example>
+  </question>
+  <question id="15">
+    <section>C# AND .NET</section>
+    <text>What are nullable reference types?</text>
+    <answer>Nullable reference types are compiler-assisted annotations that distinguish intended non-null references from maybe-null references.</answer>
+    <example>string? middleName requires a null check before middleName.Length.</example>
+  </question>
+  <question id="16">
+    <section>C# AND .NET</section>
+    <text>What is dependency injection, and what problem does it solve?</text>
+    <answer>Dependency injection supplies dependencies from outside a class, reducing tight coupling and making testing easier.</answer>
+    <example>inject IEmailSender into OrderService instead of new EmailSender().</example>
+  </question>
+  <question id="17">
+    <section>C# AND .NET</section>
+    <text>Explain transient, scoped, and singleton service lifetimes.</text>
+    <answer>Transient creates a new instance per resolution, Scoped creates one per request scope, and Singleton creates one for the application lifetime.</answer>
+    <example>DbContext is usually Scoped; a stateless formatter can be Transient.</example>
+  </question>
+  <question id="18">
+    <section>C# AND .NET</section>
+    <text>What problems can occur if a scoped service is injected into a singleton?</text>
+    <answer>A singleton outlives a scoped service, causing invalid lifetime usage, stale request data, or disposal issues.</answer>
+    <example>injecting DbContext directly into a Singleton service is incorrect.</example>
+  </question>
+  <question id="19">
+    <section>C# AND .NET</section>
+    <text>What is the Garbage Collector, and what is the Large Object Heap?</text>
+    <answer>The GC reclaims unreachable managed objects; the LOH holds large allocations, commonly 85,000 bytes or more.</answer>
+    <example>a large byte[] for a file upload can be allocated on the LOH.</example>
+  </question>
+  <question id="20">
+    <section>C# AND .NET</section>
+    <text>When would you use StringBuilder instead of string?</text>
+    <answer>Use StringBuilder for many text modifications or concatenations, especially in loops; strings are immutable.</answer>
+    <example>append CSV rows with builder.AppendLine(row).</example>
+  </question>
+  <question id="21">
+    <section>ASP.NET CORE AND APIS</section>
+    <text>What is middleware in ASP.NET Core?</text>
+    <answer>Middleware is a component in the ASP.NET Core HTTP pipeline that can inspect, modify, pass on, or short-circuit requests and responses.</answer>
+    <example>authentication middleware validates a bearer token.</example>
+  </question>
+  <question id="22">
+    <section>ASP.NET CORE AND APIS</section>
+    <text>Why does middleware order matter?</text>
+    <answer>Order determines what data is available and whether later components execute; request processing follows registration order.</answer>
+    <example>UseAuthentication must appear before UseAuthorization.</example>
+  </question>
+  <question id="23">
+    <section>ASP.NET CORE AND APIS</section>
+    <text>What is the request pipeline?</text>
+    <answer>The request pipeline is the ordered chain of middleware and endpoint execution that handles an HTTP request and response.</answer>
+    <example>exception handler -&gt; routing -&gt; authentication -&gt; authorization -&gt; endpoint.</example>
+  </question>
+  <question id="24">
+    <section>ASP.NET CORE AND APIS</section>
+    <text>What is the difference between controllers and minimal APIs?</text>
+    <answer>Controllers organize actions in classes and fit larger MVC-style APIs; minimal APIs map handlers directly and suit smaller or focused endpoints.</answer>
+    <example>app.MapGet("/health", () =&gt; Results.Ok());</example>
+  </question>
+  <question id="25">
+    <section>ASP.NET CORE AND APIS</section>
+    <text>What are HTTP verbs, and when do you use GET, POST, PUT, PATCH, and DELETE?</text>
+    <answer>HTTP verbs express intent: GET reads, POST creates or invokes processing, PUT replaces, PATCH partially updates, and DELETE removes.</answer>
+    <example>POST /orders creates an order; DELETE /orders/5 removes one.</example>
+  </question>
+  <question id="26">
+    <section>ASP.NET CORE AND APIS</section>
+    <text>What is the difference between PUT and PATCH?</text>
+    <answer>PUT generally replaces a complete resource representation; PATCH updates only selected fields.</answer>
+    <example>PATCH /users/5 with {"isActive":false} changes one property.</example>
+  </question>
+  <question id="27">
+    <section>ASP.NET CORE AND APIS</section>
+    <text>Which HTTP status codes should an API return for common outcomes?</text>
+    <answer>Common outcomes include 200 for successful reads, 201 for creation, 204 for successful no-body responses, 400 for invalid input, 401 for missing/invalid authentication, 403 for insufficient permission, 404 for missing resources, 409 for conflicts, and 500 for unexpected failures.</answer>
+    <example>POST creates a product and returns 201 Created.</example>
+  </question>
+  <question id="28">
+    <section>ASP.NET CORE AND APIS</section>
+    <text>What is model binding?</text>
+    <answer>Model binding maps request data from routes, query strings, headers, forms, and body into action parameters or DTOs.</answer>
+    <example>GET /products?page=2 binds page to an int parameter.</example>
+  </question>
+  <question id="29">
+    <section>ASP.NET CORE AND APIS</section>
+    <text>What is model validation, and how do data annotations work?</text>
+    <answer>Model validation checks bound input against rules; data annotations declare common constraints such as Required, Range, and EmailAddress.</answer>
+    <example>[Required] public string Name { get; set; }.</example>
+  </question>
+  <question id="30">
+    <section>ASP.NET CORE AND APIS</section>
+    <text>What is a DTO, and why should entity models not be exposed directly?</text>
+    <answer>A DTO defines the API data contract. Do not expose entities directly because they can reveal internal fields, couple the API to persistence, and allow overposting.</answer>
+    <example>UserDto omits PasswordHash and IsAdmin.</example>
+  </question>
+  <question id="31">
+    <section>ASP.NET CORE AND APIS</section>
+    <text>What is API versioning, and why is it needed?</text>
+    <answer>API versioning supports contract evolution without breaking existing consumers.</answer>
+    <example>keep /api/v1/products while /api/v2/products adds a changed response shape.</example>
+  </question>
+  <question id="32">
+    <section>ASP.NET CORE AND APIS</section>
+    <text>How do you implement global exception handling?</text>
+    <answer>Use early exception-handling middleware or IExceptionHandler to log unhandled exceptions and return safe standardized errors.</answer>
+    <example>app.UseExceptionHandler();</example>
+  </question>
+  <question id="33">
+    <section>ASP.NET CORE AND APIS</section>
+    <text>What is ProblemDetails?</text>
+    <answer>ProblemDetails is a standardized structured HTTP error response format containing fields such as status, title, detail, and trace ID.</answer>
+    <example>return Results.Problem(statusCode: 500, title: "Unexpected error");</example>
+  </question>
+  <question id="34">
+    <section>ASP.NET CORE AND APIS</section>
+    <text>What is CORS, and when is it required?</text>
+    <answer>CORS controls browser cross-origin access and is required when a browser frontend on one origin calls an API on another origin.</answer>
+    <example>allow https://app.example.com to call https://api.example.com.</example>
+  </question>
+  <question id="35">
+    <section>ASP.NET CORE AND APIS</section>
+    <text>How would you implement pagination, filtering, and sorting?</text>
+    <answer>Use query parameters with bounded page sizes, validated filter options, and a whitelist of sort fields.</answer>
+    <example>GET /products?page=1&amp;pageSize=20&amp;category=books&amp;sort=price_desc.</example>
+  </question>
+  <question id="36">
+    <section>ASP.NET CORE AND APIS</section>
+    <text>What is idempotency, and which HTTP methods are idempotent?</text>
+    <answer>Idempotency means repeating an identical request has the same intended final server state. GET, PUT, DELETE, HEAD, OPTIONS, and TRACE are defined as idempotent; PATCH may or may not be.</answer>
+    <example>repeating PUT /users/5 with the same JSON leaves the same final user state.</example>
+  </question>
+  <question id="37">
+    <section>ASP.NET CORE AND APIS</section>
+    <text>How do you upload files securely through an API?</text>
+    <answer>Validate file size and type, generate server-side file names, scan when appropriate, store outside the web root or object storage, and enforce authorization.</answer>
+    <example>reject an executable disguised as an image and store accepted content using a generated GUID name.</example>
+  </question>
+  <question id="38">
+    <section>ASP.NET CORE AND APIS</section>
+    <text>What is rate limiting, and why would an API need it?</text>
+    <answer>Rate limiting restricts request volume to protect availability, prevent abuse, and control expensive operations.</answer>
+    <example>return 429 after 100 requests per minute per client.</example>
+  </question>
+  <question id="39">
+    <section>ASP.NET CORE AND APIS</section>
+    <text>What is Swagger/OpenAPI, and how is it useful?</text>
+    <answer>OpenAPI describes endpoints, inputs, outputs, and security; Swagger tools present interactive documentation and client-generation support.</answer>
+    <example>Swagger UI lets a developer test GET /products.</example>
+  </question>
+  <question id="40">
+    <section>ASP.NET CORE AND APIS</section>
+    <text>How do you log requests, errors, and correlation IDs?</text>
+    <answer>Use structured logs for requests and errors, and include or propagate a correlation ID through services.</answer>
+    <example>log OrderId and TraceId when order creation fails.</example>
+  </question>
+  <question id="41">
+    <section>AUTHENTICATION AND SECURITY</section>
+    <text>What is the difference between authentication and authorization?</text>
+    <answer>Authentication establishes identity; authorization determines whether that identity may perform an action.</answer>
+    <example>a JWT identifies a customer, but an Admin policy controls user deletion.</example>
+  </question>
+  <question id="42">
+    <section>AUTHENTICATION AND SECURITY</section>
+    <text>How does JWT authentication work?</text>
+    <answer>JWT authentication validates a signed bearer token, then creates an authenticated principal from its claims.</answer>
+    <example>UseAuthentication validates issuer, audience, lifetime, and signing key.</example>
+  </question>
+  <question id="43">
+    <section>AUTHENTICATION AND SECURITY</section>
+    <text>What are the three parts of a JWT?</text>
+    <answer>A JWT has header, payload, and signature sections.</answer>
+    <example>base64url(header).base64url(payload).signature.</example>
+  </question>
+  <question id="44">
+    <section>AUTHENTICATION AND SECURITY</section>
+    <text>What claims are stored in a JWT?</text>
+    <answer>JWT claims can include subject/user ID, issuer, audience, expiry, roles, scopes, and application-specific identity data.</answer>
+    <example>sub=42 and role=Admin.</example>
+  </question>
+  <question id="45">
+    <section>AUTHENTICATION AND SECURITY</section>
+    <text>What is the difference between a 401 and a 403 response?</text>
+    <answer>401 means valid authentication credentials are missing or invalid; 403 means the user is authenticated but lacks required permission.</answer>
+    <example>expired token gives 401; Customer calling Admin endpoint gives 403.</example>
+  </question>
+  <question id="46">
+    <section>AUTHENTICATION AND SECURITY</section>
+    <text>How do role-based and policy-based authorization differ?</text>
+    <answer>Role-based authorization checks membership in roles; policy-based authorization uses named requirements that can combine roles, claims, and custom rules.</answer>
+    <example>an Admin role versus a FinanceApproval policy requiring department and amount limit.</example>
+  </question>
+  <question id="47">
+    <section>AUTHENTICATION AND SECURITY</section>
+    <text>How would you implement refresh tokens?</text>
+    <answer>Issue short-lived access tokens and securely stored refresh tokens; rotate refresh tokens, store server-side hashes or records, and revoke them on logout or compromise.</answer>
+    <example>refresh endpoint invalidates the old token and issues a replacement.</example>
+  </question>
+  <question id="48">
+    <section>AUTHENTICATION AND SECURITY</section>
+    <text>How do you secure a password-reset flow?</text>
+    <answer>Use a cryptographically random token, store only a hash, expire it quickly, make it single-use, rate-limit requests, and avoid account enumeration.</answer>
+    <example>always return the same response whether an email exists or not.</example>
+  </question>
+  <question id="49">
+    <section>AUTHENTICATION AND SECURITY</section>
+    <text>Why should password-reset tokens be short-lived and single-use?</text>
+    <answer>Short-lived, single-use tokens reduce the window for theft or replay.</answer>
+    <example>mark a reset token consumed immediately after a successful password change.</example>
+  </question>
+  <question id="50">
+    <section>AUTHENTICATION AND SECURITY</section>
+    <text>How do you safely store passwords?</text>
+    <answer>Store passwords using a slow password-hashing algorithm with salt, such as ASP.NET Core Identity's password hasher, bcrypt, Argon2, or PBKDF2.</answer>
+    <example>store a password hash, never the original password.</example>
+  </question>
+  <question id="51">
+    <section>AUTHENTICATION AND SECURITY</section>
+    <text>What is hashing versus encryption?</text>
+    <answer>Hashing is one-way verification; encryption is reversible with a key.</answer>
+    <example>hash passwords; encrypt data only when it must later be recovered.</example>
+  </question>
+  <question id="52">
+    <section>AUTHENTICATION AND SECURITY</section>
+    <text>How do you prevent SQL injection in EF Core and raw SQL?</text>
+    <answer>Use LINQ parameterization, parameterized raw SQL, and avoid building SQL with concatenated user input.</answer>
+    <example>FromSqlInterpolated($"SELECT * FROM Products WHERE Id={id}").</example>
+  </question>
+  <question id="53">
+    <section>AUTHENTICATION AND SECURITY</section>
+    <text>What is XSS, and how can APIs help prevent it?</text>
+    <answer>XSS is injection of malicious script into pages. APIs help by treating input as data, validating/encoding as appropriate, and avoiding unsafe HTML fields unless deliberately sanitized.</answer>
+    <example>return user comments as JSON, not raw HTML rendered without encoding.</example>
+  </question>
+  <question id="54">
+    <section>AUTHENTICATION AND SECURITY</section>
+    <text>What is CSRF, and when does it matter?</text>
+    <answer>CSRF tricks a browser into sending authenticated requests using ambient credentials such as cookies; it matters mainly for cookie-based authentication, not bearer tokens sent explicitly by clients.</answer>
+    <example>use antiforgery protections for cookie-authenticated state-changing endpoints.</example>
+  </question>
+  <question id="55">
+    <section>AUTHENTICATION AND SECURITY</section>
+    <text>How should secrets and connection strings be stored?</text>
+    <answer>Use development user secrets and production environment variables or managed secret stores; do not commit secrets to source control.</answer>
+    <example>load a production connection string from Key Vault.</example>
+  </question>
+  <question id="56">
+    <section>AUTHENTICATION AND SECURITY</section>
+    <text>How do HTTPS and TLS protect an API?</text>
+    <answer>HTTPS uses TLS to encrypt traffic, authenticate the server, and protect message integrity in transit.</answer>
+    <example>a login request cannot be read or altered by a network observer without breaking TLS.</example>
+  </question>
+  <question id="57">
+    <section>ENTITY FRAMEWORK CORE</section>
+    <text>What is EF Core, and what is an ORM?</text>
+    <answer>EF Core is a .NET object-relational mapper that maps objects and LINQ queries to database operations.</answer>
+    <example>db.Products.Where(p =&gt; p.Active) becomes SQL.</example>
+  </question>
+  <question id="58">
+    <section>ENTITY FRAMEWORK CORE</section>
+    <text>What is the difference between IEnumerable and IQueryable in EF Core?</text>
+    <answer>IEnumerable is generally in-memory enumeration; IQueryable carries an expression a provider like EF Core can translate to SQL.</answer>
+    <example>filter IQueryable before ToListAsync to keep filtering in the database.</example>
+  </question>
+  <question id="59">
+    <section>ENTITY FRAMEWORK CORE</section>
+    <text>What is deferred execution in LINQ?</text>
+    <answer>Deferred execution means a LINQ query often runs when enumerated or materialized rather than when declared.</answer>
+    <example>query executes at await query.ToListAsync().</example>
+  </question>
+  <question id="60">
+    <section>ENTITY FRAMEWORK CORE</section>
+    <text>What does AsNoTracking() do, and when should you use it?</text>
+    <answer>AsNoTracking disables change tracking for a query, reducing overhead for read-only results.</answer>
+    <example>use it for a product catalog GET endpoint.</example>
+  </question>
+  <question id="61">
+    <section>ENTITY FRAMEWORK CORE</section>
+    <text>What is eager loading, lazy loading, and explicit loading?</text>
+    <answer>Eager loading loads related data in the initial query, lazy loading loads it when accessed, and explicit loading loads it on request.</answer>
+    <example>db.Orders.Include(o =&gt; o.Items) is eager loading.</example>
+  </question>
+  <question id="62">
+    <section>ENTITY FRAMEWORK CORE</section>
+    <text>What is the N+1 query problem?</text>
+    <answer>N+1 occurs when one query loads a list and extra queries load relationships for each item.</answer>
+    <example>1 order query plus 100 item queries for 100 orders.</example>
+  </question>
+  <question id="63">
+    <section>ENTITY FRAMEWORK CORE</section>
+    <text>What are EF Core migrations?</text>
+    <answer>Migrations are versioned schema changes generated and applied by EF Core.</answer>
+    <example>Add-Migration AddPrice then Update-Database.</example>
+  </question>
+  <question id="64">
+    <section>ENTITY FRAMEWORK CORE</section>
+    <text>What is the difference between SaveChanges() and SaveChangesAsync()?</text>
+    <answer>SaveChanges blocks the calling thread during I/O; SaveChangesAsync returns a Task and supports asynchronous I/O and cancellation.</answer>
+    <example>await db.SaveChangesAsync(cancellationToken).</example>
+  </question>
+  <question id="65">
+    <section>ENTITY FRAMEWORK CORE</section>
+    <text>What is change tracking?</text>
+    <answer>Change tracking records entity state so EF Core can generate INSERT, UPDATE, and DELETE statements on SaveChanges.</answer>
+    <example>changing product.Price marks the tracked entity Modified.</example>
+  </question>
+  <question id="66">
+    <section>ENTITY FRAMEWORK CORE</section>
+    <text>How do you handle database transactions in EF Core?</text>
+    <answer>Use EF Core's transaction support for one SaveChanges or explicitly begin a transaction for multiple operations that must succeed together.</answer>
+    <example>create an order and reduce inventory in one transaction.</example>
+  </question>
+  <question id="67">
+    <section>ENTITY FRAMEWORK CORE</section>
+    <text>What is optimistic concurrency, and how can a RowVersion column help?</text>
+    <answer>Optimistic concurrency detects competing updates by comparing a concurrency token such as RowVersion.</answer>
+    <example>an UPDATE fails when the stored row version differs from the client's original version.</example>
+  </question>
+  <question id="68">
+    <section>ENTITY FRAMEWORK CORE</section>
+    <text>When would you use raw SQL rather than LINQ?</text>
+    <answer>Use raw SQL for database-specific features, complex proven queries, bulk operations, or stored procedures when LINQ is unsuitable; keep it parameterized.</answer>
+    <example>call a reporting stored procedure with parameters.</example>
+  </question>
+  <question id="69">
+    <section>ENTITY FRAMEWORK CORE</section>
+    <text>What is the repository pattern, and is it always useful with EF Core?</text>
+    <answer>Repository pattern abstracts data access; with EF Core, DbContext already provides repository and unit-of-work capabilities, so extra repositories are useful only when they add meaningful boundaries.</answer>
+    <example>use a repository for a complex aggregate query, not merely to wrap every DbSet.</example>
+  </question>
+  <question id="70">
+    <section>ENTITY FRAMEWORK CORE</section>
+    <text>How would you improve a slow EF Core query?</text>
+    <answer>Inspect generated SQL and execution plans, project only needed columns, add appropriate indexes, avoid N+1, use AsNoTracking for reads, paginate, and measure.</answer>
+    <example>select a ProductListDto rather than Include all related entities.</example>
+  </question>
+  <question id="71">
+    <section>SQL SERVER AND DATABASES</section>
+    <text>What is the difference between a clustered and nonclustered index?</text>
+    <answer>A clustered index defines the physical row ordering of a table; a nonclustered index is a separate structure containing keys and row locators.</answer>
+    <example>primary key often uses a clustered index; Email may use nonclustered unique index.</example>
+  </question>
+  <question id="72">
+    <section>SQL SERVER AND DATABASES</section>
+    <text>Why can a table have only one clustered index?</text>
+    <answer>A table has one clustered index because rows can be physically ordered in only one way.</answer>
+    <example>rows cannot simultaneously be stored in both ID order and CreatedAt order.</example>
+  </question>
+  <question id="73">
+    <section>SQL SERVER AND DATABASES</section>
+    <text>When should you create a nonclustered index?</text>
+    <answer>Create a nonclustered index for columns frequently used in selective WHERE, JOIN, ORDER BY, or lookup operations, after measuring workload.</answer>
+    <example>index Orders(CustomerId, CreatedAt) for customer-order history queries.</example>
+  </question>
+  <question id="74">
+    <section>SQL SERVER AND DATABASES</section>
+    <text>How do indexes affect INSERT, UPDATE, and DELETE performance?</text>
+    <answer>Indexes speed reads but add work to INSERT, UPDATE, and DELETE because index entries must also be maintained.</answer>
+    <example>too many indexes slow bulk imports.</example>
+  </question>
+  <question id="75">
+    <section>SQL SERVER AND DATABASES</section>
+    <text>What is a primary key versus a unique constraint?</text>
+    <answer>A primary key uniquely identifies each row and is one per table; a unique constraint enforces uniqueness on another candidate key and can allow null behavior depending on database rules.</answer>
+    <example>UserId is primary key; Email is unique.</example>
+  </question>
+  <question id="76">
+    <section>SQL SERVER AND DATABASES</section>
+    <text>Why might an email column use both NOT NULL and UNIQUE?</text>
+    <answer>NOT NULL requires every row to have an email; UNIQUE prevents duplicate email values.</answer>
+    <example>two users cannot share alice@example.com and neither can omit email.</example>
+  </question>
+  <question id="77">
+    <section>SQL SERVER AND DATABASES</section>
+    <text>What are foreign keys, and why are they important?</text>
+    <answer>Foreign keys enforce valid relationships between tables and protect referential integrity.</answer>
+    <example>Orders.CustomerId references Customers.Id.</example>
+  </question>
+  <question id="78">
+    <section>SQL SERVER AND DATABASES</section>
+    <text>What is normalization, and when might denormalization be useful?</text>
+    <answer>Normalization reduces duplication and update anomalies by separating related facts; denormalization intentionally duplicates data for read performance or simpler reporting.</answer>
+    <example>store Product separately from OrderItems, but store product name snapshot on an invoice.</example>
+  </question>
+  <question id="79">
+    <section>SQL SERVER AND DATABASES</section>
+    <text>What is the difference between INNER JOIN, LEFT JOIN, and FULL OUTER JOIN?</text>
+    <answer>INNER JOIN returns matching rows, LEFT JOIN returns all left rows plus matches, and FULL OUTER JOIN returns rows from both sides whether matched or not.</answer>
+    <example>LEFT JOIN customers to orders includes customers with no orders.</example>
+  </question>
+  <question id="80">
+    <section>SQL SERVER AND DATABASES</section>
+    <text>What is the difference between WHERE and HAVING?</text>
+    <answer>WHERE filters rows before grouping; HAVING filters groups after aggregation.</answer>
+    <example>WHERE Status='Paid' then HAVING COUNT(*) &gt; 5.</example>
+  </question>
+  <question id="81">
+    <section>SQL SERVER AND DATABASES</section>
+    <text>What are transactions and ACID properties?</text>
+    <answer>Transactions group work atomically. ACID means Atomicity, Consistency, Isolation, and Durability.</answer>
+    <example>a transfer debits and credits together or rolls back both.</example>
+  </question>
+  <question id="82">
+    <section>SQL SERVER AND DATABASES</section>
+    <text>What are isolation levels and dirty reads?</text>
+    <answer>Isolation levels control visibility and locking behavior; a dirty read sees uncommitted data from another transaction.</answer>
+    <example>READ UNCOMMITTED may read a balance later rolled back.</example>
+  </question>
+  <question id="83">
+    <section>SQL SERVER AND DATABASES</section>
+    <text>What is a deadlock, and how can you reduce it?</text>
+    <answer>A deadlock occurs when transactions hold locks needed by each other. Reduce it with consistent access order, short transactions, good indexes, and retry logic for deadlock victims.</answer>
+    <example>always update Accounts before Orders in the same order.</example>
+  </question>
+  <question id="84">
+    <section>SQL SERVER AND DATABASES</section>
+    <text>What is a stored procedure, and when would you use one?</text>
+    <answer>A stored procedure is named database-side SQL logic. Use it for controlled data operations, complex reporting, or database-centric operations when appropriate.</answer>
+    <example>dbo.GetMonthlySales @Year, @Month.</example>
+  </question>
+  <question id="85">
+    <section>SQL SERVER AND DATABASES</section>
+    <text>How would you find and optimize a slow SQL query?</text>
+    <answer>Use query-store/profiler data, execution plans, duration and I/O metrics; then fix scans, missing indexes, poor joins, bad estimates, or excessive data retrieval.</answer>
+    <example>replace SELECT * with needed columns and add an index matching a frequent predicate.</example>
+  </question>
+  <question id="86">
+    <section>ARCHITECTURE, TESTING, AND PRODUCTION</section>
+    <text>What are SOLID principles?</text>
+    <answer>SOLID means Single Responsibility, Open/Closed, Liskov Substitution, Interface Segregation, and Dependency Inversion.</answer>
+    <example>depend on IPaymentGateway instead of one concrete payment vendor.</example>
+  </question>
+  <question id="87">
+    <section>ARCHITECTURE, TESTING, AND PRODUCTION</section>
+    <text>What is Clean Architecture?</text>
+    <answer>Clean Architecture separates domain rules from frameworks, UI, and infrastructure, with dependencies pointing inward toward core business logic.</answer>
+    <example>Domain does not reference EF Core; Infrastructure implements persistence interfaces.</example>
+  </question>
+  <question id="88">
+    <section>ARCHITECTURE, TESTING, AND PRODUCTION</section>
+    <text>What is the difference between a monolith, modular monolith, and microservices?</text>
+    <answer>A monolith deploys as one application, a modular monolith remains one deployment with strong internal module boundaries, and microservices deploy independently communicating over network boundaries.</answer>
+    <example>Orders and Catalog are modules in one app or independent services.</example>
+  </question>
+  <question id="89">
+    <section>ARCHITECTURE, TESTING, AND PRODUCTION</section>
+    <text>When would you choose REST versus asynchronous messaging?</text>
+    <answer>Use REST for synchronous request-response interactions where the caller needs an immediate result; use asynchronous messaging for decoupled, long-running, or event-driven workflows.</answer>
+    <example>REST creates an order; a message triggers email confirmation.</example>
+  </question>
+  <question id="90">
+    <section>ARCHITECTURE, TESTING, AND PRODUCTION</section>
+    <text>What is a message queue, and why use RabbitMQ, Azure Service Bus, or Kafka?</text>
+    <answer>A message queue brokers asynchronous messages, improving decoupling, buffering, and reliability. RabbitMQ and Service Bus are brokers; Kafka is a distributed event-streaming platform.</answer>
+    <example>publish OrderCreated for inventory and notification consumers.</example>
+  </question>
+  <question id="91">
+    <section>ARCHITECTURE, TESTING, AND PRODUCTION</section>
+    <text>What is eventual consistency?</text>
+    <answer>Eventual consistency means related systems may temporarily show different states but converge after asynchronous processing.</answer>
+    <example>an order appears before the analytics projection updates.</example>
+  </question>
+  <question id="92">
+    <section>ARCHITECTURE, TESTING, AND PRODUCTION</section>
+    <text>What is the retry pattern, and why is exponential backoff important?</text>
+    <answer>Retry repeats a transiently failed operation; exponential backoff increases delays to avoid overwhelming a struggling dependency.</answer>
+    <example>retry a temporary 503 after 1, 2, and 4 seconds with jitter.</example>
+  </question>
+  <question id="93">
+    <section>ARCHITECTURE, TESTING, AND PRODUCTION</section>
+    <text>What is caching, and when would you use Redis?</text>
+    <answer>Caching stores reusable data to reduce latency and backend load; Redis is useful as a shared distributed cache across instances.</answer>
+    <example>cache product categories for ten minutes in Redis.</example>
+  </question>
+  <question id="94">
+    <section>ARCHITECTURE, TESTING, AND PRODUCTION</section>
+    <text>What is the difference between unit testing and integration testing?</text>
+    <answer>Unit tests isolate one class or method; integration tests verify components together, such as HTTP pipeline, database, and serialization.</answer>
+    <example>test OrderService rule in unit test; call POST /orders in integration test.</example>
+  </question>
+  <question id="95">
+    <section>ARCHITECTURE, TESTING, AND PRODUCTION</section>
+    <text>How do you mock dependencies in unit tests?</text>
+    <answer>Mock dependencies through interfaces using a mocking framework or test double, then verify outputs and interactions without external systems.</answer>
+    <example>mock IEmailSender and verify SendAsync was called once.</example>
+  </question>
+  <question id="96">
+    <section>ARCHITECTURE, TESTING, AND PRODUCTION</section>
+    <text>How would you test a protected API endpoint end-to-end?</text>
+    <answer>Create a test host, configure test authentication or obtain a real test token, seed controlled data, call the endpoint, and assert both status and response behavior.</answer>
+    <example>a Customer token gets 403 from an Admin endpoint.</example>
+  </question>
+  <question id="97">
+    <section>ARCHITECTURE, TESTING, AND PRODUCTION</section>
+    <text>What is Docker, and why containerize a .NET API?</text>
+    <answer>Docker packages an application and dependencies into a portable container image, improving environment consistency and deployment.</answer>
+    <example>build an ASP.NET Core API image and run it with its required environment variables.</example>
+  </question>
+  <question id="98">
+    <section>ARCHITECTURE, TESTING, AND PRODUCTION</section>
+    <text>What does a CI/CD pipeline do?</text>
+    <answer>CI/CD automatically builds, tests, scans, packages, and deploys code through controlled stages.</answer>
+    <example>a pull request runs unit tests; a release deploys to staging then production.</example>
+  </question>
+  <question id="99">
+    <section>ARCHITECTURE, TESTING, AND PRODUCTION</section>
+    <text>How would you investigate a production performance issue that cannot be reproduced locally?</text>
+    <answer>Use production observability: metrics, traces, structured logs, profiling, database telemetry, and representative load data. Form a hypothesis, measure, mitigate, and validate.</answer>
+    <example>trace a slow request to an N+1 database query visible only under production data volume.</example>
+  </question>
+  <question id="100">
+    <section>ARCHITECTURE, TESTING, AND PRODUCTION</section>
+    <text>Describe a difficult production issue you solved: how did you identify the cause, fix it, test it, and prevent recurrence?</text>
+    <answer>Answer with STAR-style evidence: describe the symptom and impact, investigation data, root cause, minimal safe fix, verification, and prevention.</answer>
+    <example>high latency traced to a missing index; add index, compare p95 before/after, add query monitoring and regression test.</example>
+  </question>
+</questions>
