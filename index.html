@@ -1,222 +1,677 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
-    <meta http-equiv="Pragma" content="no-cache">
-    <meta http-equiv="Expires" content="0">
-    <link rel="shortcut icon" type="image/png" href="./images/favicon.png" />
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sanjiv Khare — Backend .NET Engineer</title>
+    <meta name="description" content="Backend .NET engineer with 3 years of experience building ASP.NET Core APIs, EF Core data layers, and modernizing legacy .NET systems.">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <style>
+        :root {
+            --bg: #0a0e14;
+            --bg2: #0f1420;
+            --surface: #121826;
+            --border: #232c3d;
+            --text: #e8edf5;
+            --muted: #8b98ac;
+            --accent: #7bdcb5;
+            --accent2: #7c9cff;
+            --mono: 'SFMono-Regular',ui-monospace,Menlo,Consolas,monospace;
+            --sans: -apple-system,BlinkMacSystemFont,'Segoe UI',Inter,sans-serif;
+        }
 
-    <!-- Put your site title here -->
-    <title>
-        Sanjiv Khare | .NET Backend Engineer based in Pune, India.
-    </title>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0
+        }
 
-    <meta name="description" content=".NET Backend Engineer with 3 years of experience building enterprise-grade ASP.NET Core APIs, SQL Server backends and multi-tenant applications.">
-    <!-- Add some coding keywords below, Ex: (React, CSS etc) -->
-    <meta name="keywords" content="Sanjiv Khare, .NET, ASP.NET Core, C#, SQL Server, REST API, Entity Framework Core, Backend Developer, Pune" />
-    <link rel="stylesheet" href="index.css" />
+        html {
+            scroll-behavior: smooth
+        }
+
+        body {
+            background: var(--bg);
+            color: var(--text);
+            font-family: var(--sans);
+            line-height: 1.65;
+            overflow-x: hidden
+        }
+
+        a {
+            color: inherit;
+            text-decoration: none
+        }
+
+        .wrap {
+            max-width: 960px;
+            margin: 0 auto;
+            padding: 0 24px
+        }
+
+        /* stack strip */
+        .stackstrip {
+            border-bottom: 1px solid var(--border);
+            background: var(--bg2);
+            padding: 14px 0;
+            overflow: hidden;
+            white-space: nowrap;
+            position: relative
+        }
+
+            .stackstrip::before, .stackstrip::after {
+                content: '';
+                position: absolute;
+                top: 0;
+                bottom: 0;
+                width: 60px;
+                z-index: 2;
+                pointer-events: none
+            }
+
+            .stackstrip::before {
+                left: 0;
+                background: linear-gradient(90deg,var(--bg2),transparent)
+            }
+
+            .stackstrip::after {
+                right: 0;
+                background: linear-gradient(270deg,var(--bg2),transparent)
+            }
+
+        .stackstrip__track {
+            display: inline-flex;
+            gap: 36px;
+            animation: scroll 28s linear infinite;
+            padding-left: 36px
+        }
+
+        .stackstrip:hover .stackstrip__track {
+            animation-play-state: paused
+        }
+
+        .stackstrip__item {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            font-family: var(--mono);
+            font-size: 13px;
+            color: var(--muted);
+            letter-spacing: .02em
+        }
+
+            .stackstrip__item b {
+                color: var(--accent);
+                font-weight: 600
+            }
+
+        @keyframes scroll {
+            from {
+                transform: translateX(0)
+            }
+
+            to {
+                transform: translateX(-50%)
+            }
+        }
+
+        /* nav */
+        nav {
+            position: sticky;
+            top: 0;
+            z-index: 10;
+            background: rgba(10,14,20,.85);
+            backdrop-filter: blur(12px);
+            border-bottom: 1px solid var(--border)
+        }
+
+            nav .wrap {
+                display: flex;
+                justify-content: space-between;
+                align-items: center;
+                padding: 16px 24px
+            }
+
+        .brand {
+            font-weight: 700;
+            font-size: 15px
+        }
+
+            .brand span {
+                color: var(--accent)
+            }
+
+        .navlinks {
+            display: flex;
+            gap: 28px;
+            font-size: 14px;
+            color: var(--muted)
+        }
+
+            .navlinks a:hover {
+                color: var(--text)
+            }
+
+        /* hero */
+        .hero {
+            padding: 100px 0 70px
+        }
+
+        .hero__eyebrow {
+            font-family: var(--mono);
+            color: var(--accent);
+            font-size: 13px;
+            letter-spacing: .08em;
+            margin-bottom: 18px;
+            display: flex;
+            align-items: center;
+            gap: 10px
+        }
+
+            .hero__eyebrow::before {
+                content: '';
+                width: 8px;
+                height: 8px;
+                border-radius: 50%;
+                background: var(--accent);
+                box-shadow: 0 0 12px var(--accent);
+                display: inline-block
+            }
+
+        .hero h1 {
+            font-size: clamp(32px,5.5vw,52px);
+            line-height: 1.12;
+            letter-spacing: -.02em;
+            font-weight: 700;
+            max-width: 780px
+        }
+
+            .hero h1 .grad {
+                background: linear-gradient(120deg,var(--accent),var(--accent2));
+                -webkit-background-clip: text;
+                background-clip: text;
+                color: transparent
+            }
+
+        .hero__welcome {
+            margin-top: 24px;
+            max-width: 600px;
+            color: var(--muted);
+            font-size: 16.5px
+        }
+
+        .hero__cta {
+            display: flex;
+            gap: 14px;
+            margin-top: 34px;
+            flex-wrap: wrap
+        }
+
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 12px 20px;
+            border-radius: 10px;
+            font-size: 14px;
+            font-weight: 600;
+            border: 1px solid transparent;
+            transition: .15s
+        }
+
+        .btn--solid {
+            background: var(--accent);
+            color: #06120d
+        }
+
+            .btn--solid:hover {
+                background: #8ee8c4
+            }
+
+        .btn--ghost {
+            border-color: var(--border);
+            color: var(--text)
+        }
+
+            .btn--ghost:hover {
+                border-color: var(--accent);
+                color: var(--accent)
+            }
+
+        /* section shared */
+        section {
+            padding: 64px 0
+        }
+
+        .section-label {
+            font-family: var(--mono);
+            color: var(--accent2);
+            font-size: 12px;
+            letter-spacing: .12em;
+            text-transform: uppercase;
+            margin-bottom: 10px
+        }
+
+        h2 {
+            font-size: 28px;
+            font-weight: 700;
+            letter-spacing: -.01em;
+            margin-bottom: 8px
+        }
+
+        .section-sub {
+            color: var(--muted);
+            font-size: 15px;
+            max-width: 620px;
+            margin-bottom: 36px
+        }
+
+        /* skills grid */
+        .skills {
+            border-top: 1px solid var(--border)
+        }
+
+        .skills__grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit,minmax(210px,1fr));
+            gap: 18px
+        }
+
+        .skillcard {
+            background: var(--surface);
+            border: 1px solid var(--border);
+            border-radius: 14px;
+            padding: 20px
+        }
+
+            .skillcard h3 {
+                font-size: 13px;
+                color: var(--accent);
+                font-family: var(--mono);
+                letter-spacing: .05em;
+                margin-bottom: 12px;
+                text-transform: uppercase
+            }
+
+            .skillcard ul {
+                list-style: none;
+                display: flex;
+                flex-wrap: wrap;
+                gap: 8px
+            }
+
+            .skillcard li {
+                background: var(--bg2);
+                border: 1px solid var(--border);
+                padding: 6px 11px;
+                border-radius: 8px;
+                font-size: 13px;
+                color: var(--text)
+            }
+
+        /* projects */
+        .projects {
+            border-top: 1px solid var(--border)
+        }
+
+        .project {
+            background: var(--surface);
+            border: 1px solid var(--border);
+            border-radius: 16px;
+            padding: 30px;
+            margin-bottom: 22px;
+            transition: .2s
+        }
+
+            .project:hover {
+                border-color: #37415a
+            }
+
+        .project__top {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            gap: 16px;
+            flex-wrap: wrap;
+            margin-bottom: 14px
+        }
+
+        .project__title {
+            font-size: 20px;
+            font-weight: 700
+        }
+
+        .project__tag {
+            font-family: var(--mono);
+            font-size: 11px;
+            color: var(--accent2);
+            border: 1px solid #2a3a5c;
+            padding: 4px 10px;
+            border-radius: 99px;
+            white-space: nowrap
+        }
+
+        .project__body p {
+            color: var(--muted);
+            font-size: 14.5px;
+            margin-bottom: 10px
+        }
+
+        .project__body strong {
+            color: var(--text)
+        }
+
+        .project__stack {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+            margin: 16px 0
+        }
+
+            .project__stack span {
+                font-family: var(--mono);
+                font-size: 12px;
+                background: var(--bg2);
+                border: 1px solid var(--border);
+                padding: 5px 10px;
+                border-radius: 7px;
+                color: var(--muted)
+            }
+
+        .project__links {
+            display: flex;
+            gap: 18px;
+            margin-top: 14px
+        }
+
+            .project__links a {
+                font-size: 13.5px;
+                font-weight: 600;
+                color: var(--accent);
+                display: inline-flex;
+                align-items: center;
+                gap: 6px
+            }
+
+                .project__links a:hover {
+                    text-decoration: underline
+                }
+
+        /* about */
+        .about {
+            border-top: 1px solid var(--border)
+        }
+
+        .about__text {
+            color: var(--muted);
+            font-size: 15.5px;
+            max-width: 680px
+        }
+
+            .about__text p {
+                margin-bottom: 16px
+            }
+
+            .about__text strong {
+                color: var(--text)
+            }
+
+        .about__resume {
+            margin-top: 22px
+        }
+
+        /* contact */
+        .contact {
+            border-top: 1px solid var(--border);
+            text-align: left
+        }
+
+        .contact__box {
+            background: linear-gradient(135deg,#101a2e,#0d1420);
+            border: 1px solid var(--border);
+            border-radius: 18px;
+            padding: 40px
+        }
+
+            .contact__box p {
+                color: var(--muted);
+                max-width: 520px;
+                margin-bottom: 24px
+            }
+
+        .contact__actions {
+            display: flex;
+            gap: 14px;
+            flex-wrap: wrap
+        }
+
+        footer {
+            border-top: 1px solid var(--border);
+            padding: 28px 0;
+            color: var(--muted);
+            font-size: 13px;
+            display: flex;
+            justify-content: space-between;
+            flex-wrap: wrap;
+            gap: 12px
+        }
+
+        .footer__social {
+            display: flex;
+            gap: 18px
+        }
+
+            .footer__social a {
+                color: var(--muted)
+            }
+
+                .footer__social a:hover {
+                    color: var(--accent)
+                }
+
+        @media(max-width:640px) {
+            .hero {
+                padding: 70px 0 50px
+            }
+
+            nav .navlinks {
+                display: none
+            }
+
+            section {
+                padding: 48px 0
+            }
+
+            .project__top {
+                flex-direction: column
+            }
+        }
+    </style>
 </head>
-
 <body>
 
-    <!-- ***** Header ***** -->
+    <div class="stackstrip">
+        <div class="stackstrip__track" id="stackTrack"></div>
+    </div>
 
-    <header class="header" role="banner" id="top">
-        <div class="row">
-            <nav class="nav" role="navigation">
-                <ul class="nav__items">
-                    <li class="nav__item"><a href="#work" class="nav__link">Work</a></li>
-                    <li class="nav__item"><a href="#clients" class="nav__link">Skills</a></li>
-                    <li class="nav__item">
-                        <a href="#about" class="nav__link">About</a>
-                    </li>
-                    <li class="nav__item">
-                        <a href="#contact" class="nav__link">Contact</a>
-                    </li>
-                </ul>
-            </nav>
+    <nav>
+        <div class="wrap">
+            <div class="brand">Sanjiv<span>.</span>Khare</div>
+            <div class="navlinks">
+                <a href="#about">About</a>
+                <a href="#skills">Stack</a>
+                <a href="#projects">Projects</a>
+                <a href="#contact">Contact</a>
+            </div>
         </div>
-        <div class="header__text-box row">
-            <div class="header__text">
-                <h1 class="heading-primary">
-                    <!-- Replace the following name with your name -->
-                    <span>Sanjiv Khare</span>
-                </h1>
-                <!-- Put a small paragraph about yourself -->
-                <p>.NET Backend Engineer based in Pune, India.</p>
-                <a href="#contact" class="btn btn--pink">Get in touch</a>
+    </nav>
+
+    <header class="hero">
+        <div class="wrap">
+            <div class="hero__eyebrow">Available for backend .NET roles</div>
+            <h1>Hey, I'm Sanjiv — I build <span class="grad">reliable backend systems</span> on .NET.</h1>
+            <p class="hero__welcome">
+                Welcome! I'm a backend engineer based in Pune, India, with three years of experience
+                writing ASP.NET Core APIs, designing SQL Server data layers, and untangling legacy .NET
+                Framework applications that everyone else is afraid to touch. This page is a quick look
+                at how I build things and what I've shipped — take a look around.
+            </p>
+            <div class="hero__cta">
+                <a href="#projects" class="btn btn--solid">See my work &rarr;</a>
+                <a href="#contact" class="btn btn--ghost">Get in touch</a>
+                <!-- TODO: replace with your real GitHub raw/release link once resume.pdf is pushed to the repo -->
+                <a href="https://github.com/SanjivKhareGitSync/REPLACE_ME/raw/main/resume.pdf" class="btn btn--ghost" download>Download Resume &rarr;</a>
             </div>
         </div>
     </header>
 
-    <main role="main">
-
-        <!-- ***** Work ***** -->
-
-        <section class="work" id="work">
-            <div class="row">
-                <h2>My Work</h2>
-                <div class="work__boxes">
-
-                    <!-- Each div with the work__box class is a project. -->
-
-                    <div class="work__box">
-                        <div class="work__text">
-                            <h3>FileOrganizer</h3>
-                            <p>
-                                Automated file organizer utility with extension-based folder categorization,
-                                dynamic subdirectory creation and scheduled hands-free execution.
-                            </p>
-                            <ul class="work__list">
-                                <li>.NET 8</li>
-                                <li>C# Console App</li>
-                                <li>Windows Task Scheduler</li>
-                            </ul>
-
-                            <div class="work__links">
-                                <!-- Add your repo link for this project below -->
-                                <a href="#" class="link__text">
-                                    View Source <span>&rarr;</span>
-                                </a>
-                            </div>
-                        </div>
-                        <div class="work__image-box">
-                            <img src="./images/project-3.png" class="work__image" alt="FileOrganizer project" />
-                        </div>
-                    </div>
-
-                    <div class="work__box">
-                        <div class="work__text">
-                            <h3>Prepare here</h3>
-                            <p>
-                                Only for fellow developers to prepare for interviews and get ready for the next step in their career.
-                            </p>
-                            <ul class="work__list">
-                                <li>.NET 8</li>
-                                <li>C#</li>
-                                <li>SQL SERVER</li>
-                                <li>ASP.NET Core</li>
-                                <li>SOLID principles</li>
-                                <li>DI and Middleware</li>
-                                <li>Conceptual Understanding</li>
-                            </ul>
-
-                            <div class="work__links">
-                                <!-- Add your repo link for this project below -->
-                                <a href="./NewWayToLearn/PreparationRange.html" class="link__text">
-                                    View Source <span>&rarr;</span>
-                                </a>
-                            </div>
-                        </div>
-                        <div class="work__image-box">
-                            <img src="./images/project-3.png" class="work__image" alt="FileOrganizer project" />
-                        </div>
-                    </div>
-
+    <section class="skills" id="skills">
+        <div class="wrap">
+            <div class="section-label">Tech Stack</div>
+            <h2>What I work with</h2>
+            <p class="section-sub">The tools I reach for daily, grouped by where they sit in a backend system.</p>
+            <div class="skills__grid">
+                <div class="skillcard">
+                    <h3>Languages &amp; Frameworks</h3>
+                    <ul><li>C#</li><li>.NET 8</li><li>ASP.NET Core</li><li>ASP.NET Framework 4.8</li></ul>
                 </div>
-            </div>
-        </section>
-
-        <!-- ***** Skills ***** -->
-
-        <section class="client" id="clients">
-            <div class="row">
-                <h2>Core Skills</h2>
-                <div class="client__logos">
-                    <!-- Replaced client logos with core skills, since no client logos were provided -->
-                    <p>
-                        C# &middot; .NET 8 &middot; ASP.NET Core &middot; ASP.NET Framework 4.8 &middot; Entity Framework Core &middot;
-                        RESTful APIs &middot; JWT Authentication &middot; SQL Server &middot; T-SQL &middot; LINQ to SQL &middot;
-                        React.js &middot; Telerik UI &middot; Bootstrap &middot; Git &amp; GitHub &middot; Postman &middot; Agile/Scrum
-                    </p>
+                <div class="skillcard">
+                    <h3>Data Layer</h3>
+                    <ul><li>Entity Framework Core</li><li>SQL Server</li><li>T-SQL</li><li>LINQ</li></ul>
                 </div>
-            </div>
-        </section>
-
-        <!-- ***** About ***** -->
-
-        <section class="about" id="about">
-            <div class="row">
-                <h2>About Me</h2>
-                <div class="about__content">
-                    <div class="about__text">
-                        <!-- Replace the below paragraph with info about yourself -->
-                        <p>
-                            Backend .NET Software Engineer with 3 years of experience developing, enhancing and
-                            supporting enterprise-grade automotive management applications serving multi-company
-                            bodyshop operations. Skilled in .NET 8, ASP.NET Core, C#, EF Core, ASP.NET Framework
-                            4.8, RESTful Web APIs, JWT authentication and SQL Server, with hands-on experience in
-                            scalable backend services, multi-tenant architectures, application modernization and
-                            backend automation.
-                        </p>
-                        <!-- Provide a link to your resume -->
-                        <a href="#" class="btn">My Resume</a>
-                    </div>
-
-                    <div class="about__photo-container">
-                        <!-- Add a nice photo of yourself -->
-                        <img class="about__photo" src="./images/sanjiv-khare.jpg" alt="Sanjiv Khare" />
-                    </div>
+                <div class="skillcard">
+                    <h3>APIs &amp; Auth</h3>
+                    <ul><li>REST APIs</li><li>JWT</li><li>Swagger / OpenAPI</li></ul>
                 </div>
-            </div>
-        </section>
-    </main>
-
-    <!-- ***** Contact ***** -->
-
-    <section class="contact" id="contact">
-        <div class="row">
-            <h2>Get in Touch</h2>
-            <div class="contact__info">
-                <p>
-                    Looking for a .NET Backend Engineer to help with API development, application
-                    modernization or backend automation? Or just want to say "Hi 👋"? Feel free to
-                    reach out — I'll do my best to respond back. 😊 The quickest way to reach me is
-                    via email.
-                </p>
-                <!-- Replace the email with yours -->
-                <a href="mailto:sanjivjazz@gmail.com" class="btn">sanjivjazz@gmail.com</a>
+                <div class="skillcard">
+                    <h3>Tooling</h3>
+                    <ul><li>Git &amp; GitHub</li><li>Postman</li><li>Telerik UI</li><li>Agile / Scrum</li></ul>
+                </div>
             </div>
         </div>
     </section>
 
-    <!-- ***** Footer ***** -->
+    <section class="projects" id="projects">
+        <div class="wrap">
+            <div class="section-label">Selected Work</div>
+            <h2>Projects</h2>
+            <p class="section-sub">A couple of things I've built that show how I think through backend problems.</p>
 
-    <footer role="contentinfo" class="footer">
-        <div class="row">
-            <!-- Update the links to point to your accounts -->
-            <ul class="footer__social-links">
-                <li class="footer__social-link-item">
-                    <a href="https://github.com/SanjivKhareGitSync" title="Link to Github Profile">
-                        <img src="./images/github.svg" class="footer__social-image" alt="Github">
-                    </a>
-                </li>
-                <li class="footer__social-link-item">
-                    <a href="https://www.linkedin.com/in/sanjiv-khare-594b5686" title="Link to Linkedin Profile">
-                        <img src="./images/linkedin.svg" class="footer__social-image" alt="Linkedin">
-                    </a>
-                </li>
-            </ul>
+            <div class="project">
+                <div class="project__top">
+                    <div class="project__title">Prepare Here — .NET Interview Prep Tool</div>
+                    <div class="project__tag">Data-driven UI</div>
+                </div>
+                <div class="project__body">
+                    <p><strong>Problem:</strong> most interview-prep lists are static text — hard to search, impossible to track progress against, and painful to keep updated.</p>
+                    <p><strong>Decision:</strong> instead of hardcoding 100 questions into the page's JavaScript, I split content into a standalone XML data source that the page fetches and parses at runtime with <code>DOMParser</code>. New questions get added by editing one XML file — zero code changes needed.</p>
+                    <p><strong>Result:</strong> a searchable, filterable prep tool covering six backend domains (C#/.NET, ASP.NET Core, security, EF Core, SQL Server, architecture &amp; testing), with per-question progress tracked in <code>localStorage</code>.</p>
+                    <div class="project__stack">
+                        <span>Vanilla JS</span><span>XML + DOMParser</span><span>localStorage</span><span>GitHub Pages</span>
+                    </div>
+                </div>
+                <div class="project__links">
+                    <a href="./NewWayToLearn/PreparationRange.html">Live demo &rarr;</a>
+                    <a href="https://github.com/SanjivKhareGitSync/prepare-here">Source &rarr;</a>
+                </div>
+            </div>
 
-            <!-- Kept as a courtesy credit to the original template author -->
-            <p>
-                &copy; 2026 Sanjiv Khare.</a>.
-            </p>
-            <div class="footer__github-buttons">
-                <iframe src="./NewWayToLearn/PreparationRange.html"
-                        frameborder="0" scrolling="0" width="170" height="20" title="Star Portfolio on GitHub">
-                </iframe>
+            <div class="project">
+                <div class="project__top">
+                    <div class="project__title">FileOrganizer</div>
+                    <div class="project__tag">.NET 8 Console App</div>
+                </div>
+                <div class="project__body">
+                    <p><strong>Problem:</strong> manually sorting hundreds of downloaded files by type was eating real time every week.</p>
+                    <p><strong>Decision:</strong> built a .NET 8 console app rather than a Windows Service — it needed zero admin install, was easier to debug during development, and Windows Task Scheduler already solved the "run this daily" problem without extra infrastructure.</p>
+                    <p><strong>Result:</strong> the app scans a target folder recursively, classifies files by extension, and organizes them into subfolders automatically on a schedule with no manual intervention.</p>
+                    <div class="project__stack">
+                        <span>C#</span><span>.NET 8</span><span>File I/O</span><span>Task Scheduler</span>
+                    </div>
+                </div>
+                <div class="project__links">
+                    <a href="https://github.com/SanjivKhareGitSync/file-organizer">Source &rarr;</a>
+                </div>
+            </div>
+
+        </div>
+    </section>
+
+    <section class="about" id="about">
+        <div class="wrap">
+            <div class="section-label">About</div>
+            <h2>A bit more about me</h2>
+            <div class="about__text">
+                <p>
+                    I'm a backend .NET engineer with <strong>3 years of professional experience</strong>,
+                    most of it spent on enterprise systems where reliability matters more than novelty.
+                    My day-to-day has ranged from building new functionality — bulk data-processing
+                    workflows, QR-based scanning integrations, automated third-party paint-scale
+                    integrations, and KPI analytics dashboards — to maintaining and modernizing a large
+                    ASP.NET Framework 4.8 application built with Telerik UI controls and backed by SQL
+                    Server.
+                </p>
+                <p>
+                    That mix means I spend as much time reading and untangling existing code as I do
+                    writing new code — figuring out why something was built a certain way before deciding
+                    what's safe to change. I've also worked directly with REST APIs, JWT authentication,
+                    EF Core, and background services on newer .NET 8 projects, and I'm continuing to build
+                    toward deeper cloud and microservices experience.
+                </p>
+                <p>
+                    Outside client work, I build small projects (see above) to explore ideas I don't
+                    always get to touch day-to-day.
+                </p>
+                <div class="about__resume">
+                    <!-- TODO: replace with your real GitHub raw/release link once resume.pdf is pushed to the repo -->
+                    <a href="https://github.com/SanjivKhareGitSync/REPLACE_ME/raw/main/resume.pdf" class="btn btn--ghost" download>Download Resume &rarr;</a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="contact" id="contact">
+        <div class="wrap">
+            <div class="contact__box">
+                <div class="section-label">Contact</div>
+                <h2>Let's talk</h2>
+                <p>
+                    Looking for a backend .NET engineer for API development, application modernization,
+                    or backend automation? Or just want to say hi? I'll do my best to get back to you
+                    quickly.
+                </p>
+                <div class="contact__actions">
+                    <a href="mailto:sanjivjazz@gmail.com" class="btn btn--solid">sanjivjazz@gmail.com &rarr;</a>
+                    <!-- TODO: replace with your real GitHub raw/release link once resume.pdf is pushed to the repo -->
+                    <a href="https://github.com/SanjivKhareGitSync/REPLACE_ME/raw/main/resume.pdf" class="btn btn--ghost" download>Download Resume &rarr;</a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <footer>
+        <div class="wrap" style="display:flex;justify-content:space-between;flex-wrap:wrap;gap:12px;width:100%">
+            <span>&copy; 2026 Sanjiv Khare.</span>
+            <div class="footer__social">
+                <a href="https://github.com/SanjivKhareGitSync">GitHub</a>
+                <a href="https://www.linkedin.com/in/sanjiv-khare-594b5686">LinkedIn</a>
+                <a href="mailto:sanjivjazz@gmail.com">Email</a>
             </div>
         </div>
     </footer>
 
-    <a href="#top" class="back-to-top" title="Back to Top">
-        <img src="./images/arrow-up.svg" alt="Back to Top" class="back-to-top__image" />
-    </a>
-    <script src="./index.js"></script>
-</body>
+    <script>
+const stack=['C#','.NET 8','ASP.NET Core','ASP.NET Framework 4.8','Entity Framework Core','SQL Server','T-SQL','LINQ','REST APIs','JWT Auth','Swagger','Telerik UI','Git & GitHub','Postman','Agile/Scrum'];
+const track=document.getElementById('stackTrack');
+function buildTrack(){
+  let html='';
+  for(let i=0;i<2;i++){
+    stack.forEach(s=>{ html+='<span class="stackstrip__item"><b>&bull;</b> '+s+'</span>'; });
+  }
+  track.innerHTML=html;
+}
+buildTrack();
+    </script>
 
+</body>
 </html>
