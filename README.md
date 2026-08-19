@@ -24,7 +24,7 @@
 </p>
 
 <p align="center">
-<img src="https://streak-stats.demolab.com/?user=SanjivKhareGitSync&theme=onedark&hide_border=true" />
+<img src="https://streak-stats.demolab.com/?user=SanjivKhareGitSync&theme=onedark" />
 </p>
 
 <p align="center">
