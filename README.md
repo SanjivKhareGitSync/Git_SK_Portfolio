@@ -19,13 +19,6 @@
 🤝 Comfortable working in client-facing and fast-paced environments
 
 🔥 GitHub Highlights
-<p align="center">
-<img src="https://github-readme-stats.vercel.app/api?username=SanjivKhareGitSync&show_icons=true&theme=onedark&hide_border=true" />
-</p>
-
-<p align="center">
-<img src="https://streak-stats.demolab.com/?user=SanjivKhareGitSync&theme=onedark" />
-</p>
 
 <p align="center">
 <img src="https://github-readme-activity-graph.vercel.app/graph?username=SanjivKhareGitSync&theme=react-dark" />
